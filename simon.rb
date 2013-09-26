@@ -34,17 +34,19 @@ while did_win
 	begin
 		puts "CURRENT SEQUENCE = #{sequence}"
 		sequence.each do |e|
-			sleep 0.5
 			color = colors.invert[letter_colors[e]].to_s
 			blink_color(letter_colors[e])
 			system("say '#{color}'")
 		end
+		system("say 'GO'")
 		system("stty raw -echo")
 		input = []
+
 		while str = STDIN.getc
 			print "\a"
 			input << str
 			puts "INPUT: #{str}\n"
+			sleep 0.5
 			break if input.size == sequence.size
 		end
 	ensure
