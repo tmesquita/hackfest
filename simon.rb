@@ -34,12 +34,15 @@ while did_win
 	begin
 		puts "CURRENT SEQUENCE = #{sequence}"
 		sequence.each do |e|
-			sleep 1
+			sleep 0.5
+			color = colors.invert[letter_colors[e]].to_s
 			blink_color(letter_colors[e])
+			system("say '#{color}'")
 		end
 		system("stty raw -echo")
 		input = []
 		while str = STDIN.getc
+			print "\a"
 			input << str
 			puts "INPUT: #{str}\n"
 			break if input.size == sequence.size
@@ -51,6 +54,7 @@ while did_win
 	if input == sequence
 		puts "WIN"
 	else
+		system("say 'You lose'")
 		(0..5).each do |i|
 			@arduino.digital_write 12, true
 			@arduino.digital_write 11, true
